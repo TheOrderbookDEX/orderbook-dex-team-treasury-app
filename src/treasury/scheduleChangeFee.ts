@@ -1,6 +1,6 @@
+import { digestTypedData } from '@frugal-wizard/abi2ts-lib';
 import { IOrderbookDEXTeamTreasury } from '@theorderbookdex/orderbook-dex-team-treasury/dist/interfaces/IOrderbookDEXTeamTreasury';
 import { getAccount } from '../ethereum';
-import { digestTypedData } from '../utils/digestTypedData';
 import { getNonce } from './getNonce';
 import { sortSignatures } from './sortSignatures';
 import { SupportedChainId } from './SupportedChainId';

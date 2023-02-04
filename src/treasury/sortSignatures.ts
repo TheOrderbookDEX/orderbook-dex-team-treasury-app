@@ -1,4 +1,4 @@
-import { ecrecover } from '../utils/ecrecover';
+import { ecrecover } from '@frugal-wizard/abi2ts-lib';
 
 export function sortSignatures(digest: string, signatures: string[]): string[] {
   return signatures

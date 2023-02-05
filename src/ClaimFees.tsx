@@ -5,7 +5,7 @@ import { useValidatedForm } from './utils/useValidatedForm';
 import { claimFees } from './treasury/claimFees';
 import { SupportedChainId } from './treasury/SupportedChainId';
 import { setAsyncCallback } from './utils/setAsyncCallback';
-import { addURLParams, getInitURLParam, removeURLParams } from './utils/URLParams';
+import { URLParams } from './utils/URLParams';
 
 export default function ClaimFees({
   chainId,
@@ -15,15 +15,15 @@ export default function ClaimFees({
   onError?: (error: unknown) => void;
 }) {
 
-  const [ orderbooks, changeOrderbook, insertOrderbook, removeOrderbook ] = useStateArray(decodeOrderbooks(getInitURLParam('orderbooks')));
+  const [ orderbooks, changeOrderbook, insertOrderbook, removeOrderbook ] = useStateArray(decodeOrderbooks(URLParams.orderbooks));
 
   const [ send, setSend ] = useState(() => () => {});
   const [ sending, setSending ] = useState(false);
 
   useEffect(() => {
-    const params = { orderbooks: encodeOrderbooks(orderbooks) };
-    addURLParams(params);
-    return () => removeURLParams(params);
+    Object.assign(URLParams, {
+      orderbooks: encodeOrderbooks(orderbooks),
+    });
   }, [ orderbooks ]);
 
   // send()

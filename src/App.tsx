@@ -9,7 +9,7 @@ import ClaimFees from './ClaimFees';
 import RequireSupportedChain from './RequireSupportedChain';
 import Call from './Call';
 import { getErrorMessage } from './utils/getErrorMessage';
-import { addURLParams, getInitURLParam, removeURLParams } from './utils/URLParams';
+import { URLParams } from './utils/URLParams';
 import ScheduleChangeFee from './ScheduleChangeFee';
 import ChangeFee from './ChangeFee';
 import ReplaceSigner from './ReplaceSigner';
@@ -36,12 +36,10 @@ export default function App() {
     });
   }, [ addMessage ]);
 
-  const [ tab, setTab ] = useState(getInitURLParam('tab') || 'claimFees');
+  const [ tab, setTab ] = useState(URLParams.tab || 'claimFees');
 
   useEffect(() => {
-    const params = { tab };
-    addURLParams(params);
-    return () => removeURLParams(params);
+    Object.assign(URLParams, { tab });
   }, [ tab ]);
 
   return (

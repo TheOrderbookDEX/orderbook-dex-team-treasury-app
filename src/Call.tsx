@@ -8,7 +8,7 @@ import { SupportedChainId } from './treasury/SupportedChainId';
 import { getNonce } from './treasury/getNonce';
 import { signCall } from './treasury/signCall';
 import { call } from './treasury/call';
-import { addURLParams, getInitURLParam, removeURLParams } from './utils/URLParams';
+import { URLParams } from './utils/URLParams';
 
 enum Action {
   SEND = 'send',
@@ -23,17 +23,17 @@ export default function Call({
   onError?: (error: unknown) => void;
 }) {
 
-  const [ action, setAction ] = useState(getInitURLParam('action') || Action.SEND);
-  const [ target, setTarget ] = useState(getInitURLParam('target'));
-  const [ method, setMethod ] = useState(getInitURLParam('method'));
-  const [ args, changeArg, insertArg, removeArg ] = useStateArray<[ type: string, value: string ]>(decodeArgs(getInitURLParam('args')));
-  const [ value, setValue ] = useState(getInitURLParam('value'));
-  const [ deadline, setDeadline ] = useState(getInitURLParam('deadline'));
+  const [ action, setAction ] = useState(URLParams.action || Action.SEND);
+  const [ target, setTarget ] = useState(URLParams.target);
+  const [ method, setMethod ] = useState(URLParams.method);
+  const [ args, changeArg, insertArg, removeArg ] = useStateArray<[ type: string, value: string ]>(decodeArgs(URLParams.args));
+  const [ value, setValue ] = useState(URLParams.value);
+  const [ deadline, setDeadline ] = useState(URLParams.deadline);
 
-  const [ signatures, changeSig, insertSig, removeSig ] = useStateArray<string>(decodeSignatures(getInitURLParam('signatures')));
+  const [ signatures, changeSig, insertSig, removeSig ] = useStateArray<string>(decodeSignatures(URLParams.signatures));
 
-  const [ executor, setExecutor ] = useState(getInitURLParam('executor'));
-  const [ nonce, setNonce ] = useState(getInitURLParam('nonce'));
+  const [ executor, setExecutor ] = useState(URLParams.executor);
+  const [ nonce, setNonce ] = useState(URLParams.nonce);
   const [ refreshNonce, setRefreshNonce ] = useState(() => () => {});
   const [ refreshingNonce, setRefreshingNonce ] = useState(false);
   const [ signature, setSignature ] = useState('');
@@ -43,15 +43,17 @@ export default function Call({
   const [ sending, setSending ] = useState(false);
 
   useEffect(() => {
-    const params = {
-      action, target, method,
+    Object.assign(URLParams, {
+      action,
+      target,
+      method,
       args: encodeArgs(args),
-      value, deadline,
-      ...(action === Action.SEND ? { signatures: encodeSignatures(signatures) } : {}),
-      ...(action === Action.SIGN ? { executor, nonce } : {}),
-    };
-    addURLParams(params);
-    return () => removeURLParams(params);
+      value,
+      deadline,
+      signatures: encodeSignatures(signatures),
+      executor,
+      nonce,
+    });
   }, [ action, target, method, args, value, deadline, signatures, executor, nonce ]);
 
   // refreshNonce()

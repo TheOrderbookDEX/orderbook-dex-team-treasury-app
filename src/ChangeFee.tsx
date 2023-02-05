@@ -6,7 +6,7 @@ import { parseValue } from '@frugal-wizard/abi2ts-lib';
 import { setAsyncCallback } from './utils/setAsyncCallback';
 import { SupportedChainId } from './treasury/SupportedChainId';
 import { getNonce } from './treasury/getNonce';
-import { addURLParams, getInitURLParam, removeURLParams } from './utils/URLParams';
+import { URLParams } from './utils/URLParams';
 import { parseVersion } from './treasury/parseVersion';
 import { signChangeFee } from './treasury/signChangeFee';
 import { changeFee } from './treasury/changeFee';
@@ -24,15 +24,15 @@ export default function ChangeFee({
   onError?: (error: unknown) => void;
 }) {
 
-  const [ action, setAction ] = useState(getInitURLParam('action') || Action.SEND);
-  const [ version, setVersion ] = useState(getInitURLParam('version'));
-  const [ fee, setFee ] = useState(getInitURLParam('fee'));
-  const [ deadline, setDeadline ] = useState(getInitURLParam('deadline'));
+  const [ action, setAction ] = useState(URLParams.action || Action.SEND);
+  const [ version, setVersion ] = useState(URLParams.version);
+  const [ fee, setFee ] = useState(URLParams.fee);
+  const [ deadline, setDeadline ] = useState(URLParams.deadline);
 
-  const [ signatures, changeSig, insertSig, removeSig ] = useStateArray<string>(decodeSignatures(getInitURLParam('signatures')));
+  const [ signatures, changeSig, insertSig, removeSig ] = useStateArray<string>(decodeSignatures(URLParams.signatures));
 
-  const [ executor, setExecutor ] = useState(getInitURLParam('executor'));
-  const [ nonce, setNonce ] = useState(getInitURLParam('nonce'));
+  const [ executor, setExecutor ] = useState(URLParams.executor);
+  const [ nonce, setNonce ] = useState(URLParams.nonce);
   const [ refreshNonce, setRefreshNonce ] = useState(() => () => {});
   const [ refreshingNonce, setRefreshingNonce ] = useState(false);
   const [ signature, setSignature ] = useState('');
@@ -42,13 +42,15 @@ export default function ChangeFee({
   const [ sending, setSending ] = useState(false);
 
   useEffect(() => {
-    const params = {
-      action, version, fee, deadline,
-      ...(action === Action.SEND ? { signatures: encodeSignatures(signatures) } : {}),
-      ...(action === Action.SIGN ? { executor, nonce } : {}),
-    };
-    addURLParams(params);
-    return () => removeURLParams(params);
+    Object.assign(URLParams, {
+      action,
+      version,
+      fee,
+      deadline,
+      signatures: encodeSignatures(signatures),
+      executor,
+      nonce,
+    });
   }, [ action, version, fee, deadline, signatures, executor, nonce ]);
 
   // refreshNonce()

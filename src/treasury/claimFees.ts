@@ -1,4 +1,4 @@
-import { Address } from '@frugal-wizard/abi2ts-lib';
+import { Address } from '@frugalwizard/abi2ts-lib';
 import { IOrderbookDEXTeamTreasury } from '@theorderbookdex/orderbook-dex-team-treasury/dist/interfaces/IOrderbookDEXTeamTreasury';
 import { SupportedChainId } from './SupportedChainId';
 import { treasuryAddress } from './treasuryAddress';

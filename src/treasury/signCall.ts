@@ -1,4 +1,4 @@
-import { Address, encodeCall } from '@frugal-wizard/abi2ts-lib';
+import { Address, encodeCall } from '@frugalwizard/abi2ts-lib';
 import { signTypedData } from '../ethereum';
 import { SupportedChainId } from './SupportedChainId';
 import { treasuryAddress } from './treasuryAddress';

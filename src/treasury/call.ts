@@ -1,4 +1,4 @@
-import { Address, digestTypedData, encodeCall } from '@frugal-wizard/abi2ts-lib';
+import { Address, digestTypedData, encodeCall } from '@frugalwizard/abi2ts-lib';
 import { IOrderbookDEXTeamTreasury } from '@theorderbookdex/orderbook-dex-team-treasury/dist/interfaces/IOrderbookDEXTeamTreasury';
 import { getAccount } from '../ethereum';
 import { getNonce } from './getNonce';

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { useStateArray } from './utils/useStateArray';
 import { useValidatedForm } from './utils/useValidatedForm';
-import { parseValue } from '@frugal-wizard/abi2ts-lib';
+import { parseValue } from '@frugalwizard/abi2ts-lib';
 import { setAsyncCallback } from './utils/setAsyncCallback';
 import { SupportedChainId } from './treasury/SupportedChainId';
 import { getNonce } from './treasury/getNonce';

@@ -1,4 +1,4 @@
-import { Address } from '@frugal-wizard/abi2ts-lib';
+import { Address } from '@frugalwizard/abi2ts-lib';
 import { SupportedChainId } from './SupportedChainId';
 
 export const treasuryAddress: { readonly [chainId in SupportedChainId]: Address } = {
